@@ -33,7 +33,7 @@ class CreatePassportsTable extends Migration
             $table->integer('agent')->nullable()->unsigned();
             $table->text('remarks')->nullable();
             $table->timestamps();
-            $table->foreign('position')->references('id')->on('possitions');
+            $table->foreign('position')->references('id')->on('positions');
             $table->foreign('selection_status')->references('id')->on('selection_statuses');
             $table->foreign('medical_status')->references('id')->on('medical_statuses');
             $table->foreign('medical_report')->references('id')->on('medical_reports');

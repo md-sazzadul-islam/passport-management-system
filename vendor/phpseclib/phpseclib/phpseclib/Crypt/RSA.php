@@ -878,9 +878,9 @@ class RSA
                 );
                 $key = "openssh-key-v1\0$key";
 
-                return "-----BEGIN OPENSSH PRIVATE KEY-----\r\n" .
-                       chunk_split(base64_encode($key), 70) .
-                       "-----END OPENSSH PRIVATE KEY-----";
+                return "-----BEGIN OPENSSH PRIVATE KEY-----\n" .
+                       chunk_split(base64_encode($key), 70, "\n") .
+                       "-----END OPENSSH PRIVATE KEY-----\n";
             default: // eg. self::PRIVATE_FORMAT_PKCS1
                 $components = array();
                 foreach ($raw as $name => $value) {
@@ -1219,6 +1219,7 @@ class RSA
                     $length = $this->_decodeLength($temp);
                     switch ($this->_string_shift($temp, $length)) {
                         case "\x2a\x86\x48\x86\xf7\x0d\x01\x01\x01": // rsaEncryption
+                        case "\x2A\x86\x48\x86\xF7\x0D\x01\x01\x0A": // rsaPSS
                             break;
                         case "\x2a\x86\x48\x86\xf7\x0d\x01\x05\x03": // pbeWithMD5AndDES-CBC
                             /*
@@ -2579,9 +2580,9 @@ class RSA
             $offset+= $patternMatch ? 0 : 1;
         }
 
-        // we do & instead of && to avoid https://en.wikipedia.org/wiki/Short-circuit_evaluation
+        // we do | instead of || to avoid https://en.wikipedia.org/wiki/Short-circuit_evaluation
         // to protect against timing attacks
-        if (!$hashesMatch & !$patternMatch) {
+        if (!$hashesMatch | !$patternMatch) {
             user_error('Decryption error');
             return false;
         }
@@ -2917,6 +2918,59 @@ class RSA
     }
 
     /**
+     * EMSA-PKCS1-V1_5-ENCODE (without NULL)
+     *
+     * Quoting https://tools.ietf.org/html/rfc8017#page-65,
+     *
+     * "The parameters field associated with id-sha1, id-sha224, id-sha256,
+     *  id-sha384, id-sha512, id-sha512/224, and id-sha512/256 should
+     *  generally be omitted, but if present, it shall have a value of type
+     *  NULL"
+     *
+     * @access private
+     * @param string $m
+     * @param int $emLen
+     * @return string
+     */
+    function _emsa_pkcs1_v1_5_encode_without_null($m, $emLen)
+    {
+        $h = $this->hash->hash($m);
+        if ($h === false) {
+            return false;
+        }
+
+        switch ($this->hashName) {
+            case 'sha1':
+                $t = pack('H*', '301f300706052b0e03021a0414');
+                break;
+            case 'sha256':
+                $t = pack('H*', '302f300b06096086480165030402010420');
+                break;
+            case 'sha384':
+                $t = pack('H*', '303f300b06096086480165030402020430');
+                break;
+            case 'sha512':
+                $t = pack('H*', '304f300b06096086480165030402030440');
+                break;
+            default:
+                return false;
+        }
+        $t.= $h;
+        $tLen = strlen($t);
+
+        if ($emLen < $tLen + 11) {
+            user_error('Intended encoded message length too short');
+            return false;
+        }
+
+        $ps = str_repeat(chr(0xFF), $emLen - $tLen - 3);
+
+        $em = "\0\1$ps\0$t";
+
+        return $em;
+    }
+
+    /**
      * RSASSA-PKCS1-V1_5-SIGN
      *
      * See {@link http://tools.ietf.org/html/rfc3447#section-8.2.1 RFC3447#section-8.2.1}.
@@ -2982,13 +3036,17 @@ class RSA
         // EMSA-PKCS1-v1_5 encoding
 
         $em2 = $this->_emsa_pkcs1_v1_5_encode($m, $this->k);
-        if ($em2 === false) {
+        $em3 = $this->_emsa_pkcs1_v1_5_encode_without_null($m, $this->k);
+
+        if ($em2 === false && $em3 === false) {
             user_error('RSA modulus too short');
             return false;
         }
 
         // Compare
-        return $this->_equals($em, $em2);
+
+        return ($em2 !== false && $this->_equals($em, $em2)) ||
+               ($em3 !== false && $this->_equals($em, $em3));
     }
 
     /**

@@ -27,9 +27,12 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * @author Nicolas Grekas <p@tchwork.com>
  *
  * @final
+ *
+ * @internal since Symfony 5.3
  */
 class DebugHandlersListener implements EventSubscriberInterface
 {
+    private $earlyHandler;
     private $exceptionHandler;
     private $logger;
     private $deprecationLogger;
@@ -51,9 +54,13 @@ class DebugHandlersListener implements EventSubscriberInterface
      */
     public function __construct(callable $exceptionHandler = null, LoggerInterface $logger = null, $levels = \E_ALL, ?int $throwAt = \E_ALL, bool $scream = true, $fileLinkFormat = null, bool $scope = true, LoggerInterface $deprecationLogger = null)
     {
+        $handler = set_exception_handler('var_dump');
+        $this->earlyHandler = \is_array($handler) ? $handler[0] : null;
+        restore_exception_handler();
+
         $this->exceptionHandler = $exceptionHandler;
         $this->logger = $logger;
-        $this->levels = null === $levels ? \E_ALL : $levels;
+        $this->levels = $levels ?? \E_ALL;
         $this->throwAt = \is_int($throwAt) ? $throwAt : (null === $throwAt ? null : ($throwAt ? \E_ALL : null));
         $this->scream = $scream;
         $this->fileLinkFormat = $fileLinkFormat;
@@ -69,7 +76,7 @@ class DebugHandlersListener implements EventSubscriberInterface
         if ($event instanceof ConsoleEvent && !\in_array(\PHP_SAPI, ['cli', 'phpdbg'], true)) {
             return;
         }
-        if (!$event instanceof KernelEvent ? !$this->firstCall : !$event->isMasterRequest()) {
+        if (!$event instanceof KernelEvent ? !$this->firstCall : !$event->isMainRequest()) {
             return;
         }
         $this->firstCall = $this->hasTerminatedWithException = false;
@@ -77,6 +84,10 @@ class DebugHandlersListener implements EventSubscriberInterface
         $handler = set_exception_handler('var_dump');
         $handler = \is_array($handler) ? $handler[0] : null;
         restore_exception_handler();
+
+        if (!$handler instanceof ErrorHandler) {
+            $handler = $this->earlyHandler;
+        }
 
         if ($handler instanceof ErrorHandler) {
             if ($this->logger || $this->deprecationLogger) {

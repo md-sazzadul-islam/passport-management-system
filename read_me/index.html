@@ -1,0 +1,173 @@
+<!doctype html>
+<!--[if IE 6 ]><html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <title>Passport</title>
+    <meta name="description" content="">
+    <meta name="author" content="LionCoders">
+    <meta name="copyright" content="LionCoders">
+    <meta name="generator" content="Documenter v2.0 http://rxa.li/documenter">
+    <meta name="date" content="2017-04-26T00:00:00+02:00">
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:400,700">
+    <link rel="stylesheet" href="assets/css/documenter_style.css" media="all">
+
+    <script src="assets/js/jquery.js"></script>
+</head>
+
+<body>
+    <div id="documenter_sidebar">
+        <img src="assets/images/logo.png" style="border: none;margin: 20px 20px 0;width: 80px">
+        <ul id="documenter_nav">
+            <li><a class="current" href="#documenter_cover">Start</a></li>
+            <li><a href="#server_requirement" title="SERVER REQUIREMENTS">Server Requirements</a></li>
+            <li><a href="#install" title="INSTALL">Install</a></li>
+            <li><a href="#common-error" title="Common error">Common Error</a></li>
+            <li><a href="#mail" title="SETUP MAIL SERVER">Setup Mail Server</a></li>
+            <!-- <li><a href="#video_tutorial" title="VIDEO TUTORIAL">Video Tutorial</a></li> -->
+            <li><a href="#support" title="SUPPORT">Support</a></li>
+        </ul>
+    </div>
+    <div id="documenter_content">
+        <section id="documenter_cover">
+            <h1>Passport - Passport Management System</h1>
+            <div id="documenter_buttons">
+            </div>
+            <hr>
+            <ul>
+                <li>by: ViewHtml</li>
+                <li>email: <a href="mailto:sazzadulislam6@gmail.com">sazzadulislam6@gmail.com</a></li>
+            </ul>
+            <p>Passport is a software that will help you to manage your travel agency. This user friendly software is fully responsive and has many features. Hope that this software will be helpful to manage your buisness.
+            </p>
+            <div class="backimage"></div>
+        </section>
+        <section id="server_requirement">
+            <div class="page-header">
+                <h3>SERVER REQUIREMENT</h3>
+                <hr class="notop">
+            </div>
+            <p>
+                This product is designed on most popular PHP framework Laravel. You need to have minimum requirement for running this application. Please make sure that you have completed these requirements.
+            </p>
+            <ul>
+                <li>
+                    Preferred Server - Apache/Nginx</li>
+                <li><strong>PHP Version &gt;= 7.4</strong></li>
+                <li>OpenSSL PHP Extension&nbsp;</li>
+                <li>PDO PHP Extension&nbsp;</li>
+                <li>PHP Fileinfo Extension</li>
+                <li>Mbstring PHP Extension&nbsp;</li>
+                <li>Mod Rewrite Enabled</li>
+            </ul>
+            <p>
+                &nbsp;</p>
+            <p>
+                <strong>Please note if you try to install the application on any other server say LiteSpeed or IIS, you
+                    may get undesirable result. We do not recommend you to use other server than Apache or Nginx. Also
+                    we do not provide support for installation in server other than Apache.</strong>
+            </p>
+        </section>
+        <section id="install">
+            <div class="page-header">
+                <h3>INSTALL</h3>
+                <hr class="notop">
+            </div>
+            <p>
+                First Upload the <strong>Passport.zip</strong> file to server. Then extract the zip file. Make sure that your server is showing hidden(.dot files) files.
+            </p>
+            <h2><strong>IMPORT Database</strong></h2>
+            <ul>
+                <li>
+                    After unziping the downloaded folder you will find a folder named <strong>dbBackup</strong>. Inside it you will find <strong>Passport.sql</strong>.
+                </li>
+                <li>
+                    Create a database on your phpmyadmin and import <strong>Passport.sql</strong> into the database. (Note: Disabled foreign key checks before importing the database.)
+                </li>
+            </ul>
+            <h2><strong>Connect Database</strong></h2>
+            <ul>
+                <li>
+                    Open <strong>Passport</strong> folder. Find <strong>.env</strong> hidden file. Open with text editor.
+                </li>
+                <li>
+                    Change DB_DATABASE, DB_USERNAME, DB_PASSWORD with your database name, username and password.
+                </li>
+            </ul>
+            <img alt="" src="assets/images/update_env.png">
+            <p>After that login with username:<strong>admin@viewhtml.com</strong> password:<strong>123456</strong></p>
+            <span>Demo link: </span><a href="http://passport.abdulmazidcse.com/" target="_blank">Passport</a>
+            <br>
+            <!-- <h2>Installation Video</h2>
+            <p>Watch is a video demonstrating the steps stated above. (you'll need internet connection to play the video)
+            </p>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/w2ZwRPQzzvk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <br><br>
+            <p>You can also watch this video on <a href="https://www.youtube.com/watch?v=w2ZwRPQzzvk">youtube</a></p> -->
+
+        </section>
+        <section id="common-error">
+            <div class="page-header">
+                <h3>Common Errors</h3>
+                <hr class="notop">
+            </div>
+            <ul>
+                <li>
+                    If you face 500 server error after installing the software please update your php version to 7.4 or later. If you still get 500 error after updating php version, please open your '.env' file and change the value of 'APP_DEBUG' to true. And then go to
+                    the page again where you were getting 500 server error. You should see description of actual error now. Please take a screenshot and send it over along with your cpanel access details, so that we can look into it.
+                </li>
+            </ul>
+        </section>
+        <section id="mail">
+            <div class="page-header">
+                <h3>SETUP MAIL SERVER</h3>
+                <hr class="notop">
+            </div>
+            <ul>
+                <li>
+                    Open <strong>Passport</strong> folder. Find <strong>.env</strong> hidden file. Open with text editor.
+                </li>
+                <li>
+                    Change MAIL_MAILER, MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_ENCRYPTION and MAIL_FROM_ADDRESS.
+                </li>
+            </ul>
+            <p>
+                <img alt="" src="assets/images/mail1.png">
+            </p>
+        </section>
+        <!-- <section id="video_tutorial">
+            <div class="page-header">
+                <h3>VIDEO TUTORIAL</h3>
+                <hr class="notop">
+            </div>
+            <p>
+                <iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/-C0Rk5Fae4I" width="560"></iframe>
+            </p>
+        </section> -->
+        <section id="support">
+            <div class="page-header">
+                <h3>SUPPORT</h3>
+                <hr class="notop">
+            </div>
+            <p>
+                Thanks a lot for using this user friendly software. Hope you found this documentation helpful for using this software. Please support this product by giving your ratings and testimonial.</p>
+            <p>
+                With best wishes - <a href="http://viewhtml.com">ViewHtml</a>
+            </p>
+        </section>
+    </div>
+    <script type="text/javascript">
+        $("#documenter_sidebar").mCustomScrollbar({
+            theme: "light",
+            scrollInertia: 200
+        });
+    </script>
+</body>
+
+</html>

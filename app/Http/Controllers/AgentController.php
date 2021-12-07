@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateAgentRequest;
 use App\Repositories\AgentRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
-// use Flash;
+use Flash;
 use Response;
 
 class AgentController extends AppBaseController

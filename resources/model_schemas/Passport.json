@@ -1,5 +1,4 @@
-[
-    {
+[{
         "name": "id",
         "dbType": "increments",
         "htmlType": null,
@@ -49,7 +48,7 @@
     },
     {
         "name": "position",
-        "dbType": "integer:unsigned:foreign,possitions,id",
+        "dbType": "integer:unsigned:foreign,positions,id",
         "htmlType": "select",
         "validations": "",
         "searchable": true,

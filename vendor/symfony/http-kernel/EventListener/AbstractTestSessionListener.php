@@ -41,7 +41,7 @@ abstract class AbstractTestSessionListener implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -59,12 +59,12 @@ abstract class AbstractTestSessionListener implements EventSubscriberInterface
     }
 
     /**
-     * Checks if session was initialized and saves if current request is master
+     * Checks if session was initialized and saves if current request is the main request
      * Runs on 'kernel.response' in test environment.
      */
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -81,7 +81,7 @@ abstract class AbstractTestSessionListener implements EventSubscriberInterface
         if ($session instanceof Session ? !$session->isEmpty() || (null !== $this->sessionId && $session->getId() !== $this->sessionId) : $wasStarted) {
             $params = session_get_cookie_params() + ['samesite' => null];
             foreach ($this->sessionOptions as $k => $v) {
-                if (0 === strpos($k, 'cookie_')) {
+                if (str_starts_with($k, 'cookie_')) {
                     $params[substr($k, 7)] = $v;
                 }
             }

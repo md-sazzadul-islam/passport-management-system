@@ -108,7 +108,9 @@ class PaymentController extends AppBaseController
      */
     public function edit($id)
     {
+        $data['passport'] = Passport::pluck('passport_no', 'id');
         $payment = $this->paymentRepository->find($id);
+        $data['payment'] = $payment;
 
         if (empty($payment)) {
             Flash::error('Payment not found');
@@ -116,7 +118,7 @@ class PaymentController extends AppBaseController
             return redirect(route('payments.index'));
         }
 
-        return view('payments.edit')->with('payment', $payment);
+        return view('payments.edit', $data);
     }
 
     /**

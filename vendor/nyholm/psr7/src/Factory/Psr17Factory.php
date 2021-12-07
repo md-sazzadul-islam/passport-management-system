@@ -10,8 +10,10 @@ use Psr\Http\Message\{RequestFactoryInterface, RequestInterface, ResponseFactory
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  * @author Martijn van der Ven <martijn@vanderven.se>
+ *
+ * @final This class should never be extended. See https://github.com/Nyholm/psr7/blob/master/doc/final.md
  */
-final class Psr17Factory implements RequestFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, StreamFactoryInterface, UploadedFileFactoryInterface, UriFactoryInterface
+class Psr17Factory implements RequestFactoryInterface, ResponseFactoryInterface, ServerRequestFactoryInterface, StreamFactoryInterface, UploadedFileFactoryInterface, UriFactoryInterface
 {
     public function createRequest(string $method, $uri): RequestInterface
     {
@@ -35,13 +37,18 @@ final class Psr17Factory implements RequestFactoryInterface, ResponseFactoryInte
 
     public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface
     {
-        $resource = @\fopen($filename, $mode);
+        try {
+            $resource = @\fopen($filename, $mode);
+        } catch (\Throwable $e) {
+            throw new \RuntimeException(\sprintf('The file "%s" cannot be opened.', $filename));
+        }
+
         if (false === $resource) {
-            if ('' === $mode || false === \in_array($mode[0], ['r', 'w', 'a', 'x', 'c'])) {
-                throw new \InvalidArgumentException('The mode ' . $mode . ' is invalid.');
+            if ('' === $mode || false === \in_array($mode[0], ['r', 'w', 'a', 'x', 'c'], true)) {
+                throw new \InvalidArgumentException(\sprintf('The mode "%s" is invalid.', $mode));
             }
 
-            throw new \RuntimeException('The file ' . $filename . ' cannot be opened.');
+            throw new \RuntimeException(\sprintf('The file "%s" cannot be opened.', $filename));
         }
 
         return Stream::create($resource);

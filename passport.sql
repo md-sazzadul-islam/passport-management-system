@@ -107,7 +107,7 @@ insert  into `migrations`(`id`,`migration`,`batch`) values
 (8,'2019_08_19_000000_create_failed_jobs_table',1),
 (9,'2020_08_19_064132_create_permission_tables',1),
 (10,'2020_09_11_171615_create_settings_table',1),
-(11,'2020_09_11_210625_create_possitions_table',2),
+(11,'2020_09_11_210625_create_positions_table',2),
 (12,'2020_09_11_210754_create_selection_statuses_table',3),
 (13,'2020_09_11_211125_create_references_table',4),
 (14,'2020_09_11_212045_create_medical_statuses_table',5),
@@ -299,7 +299,7 @@ CREATE TABLE `passports` (
   CONSTRAINT `passports_agent_foreign` FOREIGN KEY (`agent`) REFERENCES `agents` (`id`),
   CONSTRAINT `passports_medical_report_foreign` FOREIGN KEY (`medical_report`) REFERENCES `medical_reports` (`id`),
   CONSTRAINT `passports_medical_status_foreign` FOREIGN KEY (`medical_status`) REFERENCES `medical_statuses` (`id`),
-  CONSTRAINT `passports_position_foreign` FOREIGN KEY (`position`) REFERENCES `possitions` (`id`),
+  CONSTRAINT `passports_position_foreign` FOREIGN KEY (`position`) REFERENCES `positions` (`id`),
   CONSTRAINT `passports_reference_foreign` FOREIGN KEY (`reference`) REFERENCES `references` (`id`),
   CONSTRAINT `passports_selection_status_foreign` FOREIGN KEY (`selection_status`) REFERENCES `selection_statuses` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -367,11 +367,11 @@ CREATE TABLE `permissions` (
 
 /*Data for the table `permissions` */
 
-/*Table structure for table `possitions` */
+/*Table structure for table `positions` */
 
-DROP TABLE IF EXISTS `possitions`;
+DROP TABLE IF EXISTS `positions`;
 
-CREATE TABLE `possitions` (
+CREATE TABLE `positions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -379,9 +379,9 @@ CREATE TABLE `possitions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `possitions` */
+/*Data for the table `positions` */
 
-insert  into `possitions`(`id`,`title`,`created_at`,`updated_at`) values 
+insert  into `positions`(`id`,`title`,`created_at`,`updated_at`) values 
 (1,'Footwear','2020-09-11 21:16:13','2020-09-11 21:16:13'),
 (2,'test','2020-09-13 13:23:29','2020-09-13 13:23:29');
 

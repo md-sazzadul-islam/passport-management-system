@@ -8,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace Carbon;
 
 use Closure;
@@ -148,7 +149,7 @@ class Translator extends Translation\Translator
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
-        if (null === $domain) {
+        if ($domain === null) {
             $domain = 'messages';
         }
 
@@ -272,7 +273,7 @@ class Translator extends Translation\Translator
         $this->loadMessagesFromFile($locale);
         $this->addResource('array', $messages, $locale);
         $this->messages[$locale] = array_merge(
-            isset($this->messages[$locale]) ? $this->messages[$locale] : [],
+            $this->messages[$locale] ?? [],
             $messages
         );
 
@@ -313,7 +314,7 @@ class Translator extends Translation\Translator
      */
     public function setLocale($locale)
     {
-        $locale = preg_replace_callback('/[-_]([a-z]{2,})/', function ($matches) {
+        $locale = preg_replace_callback('/[-_]([a-z]{2,}|[0-9]{2,})/', function ($matches) {
             // _2-letters or YUE is a region, _3+-letters is a variant
             $upper = strtoupper($matches[1]);
 
@@ -326,7 +327,7 @@ class Translator extends Translation\Translator
 
         $previousLocale = $this->getLocale();
 
-        if ($previousLocale === $locale) {
+        if ($previousLocale === $locale && isset($this->messages[$locale])) {
             return true;
         }
 
@@ -355,7 +356,7 @@ class Translator extends Translation\Translator
         }
 
         // If subtag (ex: en_CA) first load the macro (ex: en) to have a fallback
-        if (strpos($locale, '_') !== false &&
+        if (str_contains($locale, '_') &&
             $this->loadMessagesFromFile($macroLocale = preg_replace('/^([^_]+).*$/', '$1', $locale))
         ) {
             parent::setLocale($macroLocale);

@@ -17,7 +17,6 @@ use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
-use XdgBaseDir\Xdg;
 
 if (!\function_exists('Psy\\sh')) {
     /**
@@ -29,7 +28,22 @@ if (!\function_exists('Psy\\sh')) {
      */
     function sh()
     {
-        return 'extract(\Psy\debug(get_defined_vars(), isset($this) ? $this : @get_called_class()));';
+        if (\version_compare(\PHP_VERSION, '8.0', '<')) {
+            return '\extract(\Psy\debug(\get_defined_vars(), isset($this) ? $this : @\get_called_class()));';
+        }
+
+        return <<<'EOS'
+if (isset($this)) {
+    \extract(\Psy\debug(\get_defined_vars(), $this));
+} else {
+    try {
+        static::class;
+        \extract(\Psy\debug(\get_defined_vars(), static::class));
+    } catch (\Error $e) {
+        \extract(\Psy\debug(\get_defined_vars()));
+    }
+}
+EOS;
     }
 }
 
@@ -123,23 +137,30 @@ if (!\function_exists('Psy\\info')) {
             return;
         }
 
-        $xdg = new Xdg();
-        $home = \rtrim(\str_replace('\\', '/', $xdg->getHomeDir()), '/');
-        $homePattern = '#^'.\preg_quote($home, '#').'/#';
-
-        $prettyPath = function ($path) use ($homePattern) {
-            if (\is_string($path)) {
-                return \preg_replace($homePattern, '~/', $path);
-            } else {
-                return $path;
-            }
+        $prettyPath = function ($path) {
+            return $path;
         };
+
+        $homeDir = (new ConfigPaths())->homeDir();
+        if ($homeDir && $homeDir = \rtrim($homeDir, '/')) {
+            $homePattern = '#^'.\preg_quote($homeDir, '#').'/#';
+            $prettyPath = function ($path) use ($homePattern) {
+                if (\is_string($path)) {
+                    return \preg_replace($homePattern, '~/', $path);
+                } else {
+                    return $path;
+                }
+            };
+        }
 
         $config = $lastConfig ?: new Configuration();
         $configEnv = (isset($_SERVER['PSYSH_CONFIG']) && $_SERVER['PSYSH_CONFIG']) ? $_SERVER['PSYSH_CONFIG'] : false;
 
+        $shellInfo = [
+            'PsySH version' => Shell::VERSION,
+        ];
+
         $core = [
-            'PsySH version'       => Shell::VERSION,
             'PHP version'         => \PHP_VERSION,
             'OS'                  => \PHP_OS,
             'default includes'    => $config->getDefaultIncludes(),
@@ -175,6 +196,7 @@ if (!\function_exists('Psy\\info')) {
         $input = [
             'interactive mode'  => $config->interactiveMode(),
             'input interactive' => $config->getInputInteractive(),
+            'yolo'              => $config->yolo(),
         ];
 
         if ($config->hasReadline()) {
@@ -265,16 +287,37 @@ if (!\function_exists('Psy\\info')) {
         ];
 
         // Shenanigans, but totally justified.
-        if ($shell = Sudo::fetchProperty($config, 'shell')) {
-            $core['loop listeners'] = \array_map('get_class', Sudo::fetchProperty($shell, 'loopListeners'));
-            $core['commands'] = \array_map('get_class', $shell->all());
+        try {
+            if ($shell = Sudo::fetchProperty($config, 'shell')) {
+                $shellClass = \get_class($shell);
+                if ($shellClass !== 'Psy\\Shell') {
+                    $shellInfo = [
+                        'PsySH version' => $shell::VERSION,
+                        'Shell class'   => $shellClass,
+                    ];
+                }
 
-            $autocomplete['custom matchers'] = \array_map('get_class', Sudo::fetchProperty($shell, 'matchers'));
+                try {
+                    $core['loop listeners'] = \array_map('get_class', Sudo::fetchProperty($shell, 'loopListeners'));
+                } catch (\ReflectionException $e) {
+                    // shrug
+                }
+
+                $core['commands'] = \array_map('get_class', $shell->all());
+
+                try {
+                    $autocomplete['custom matchers'] = \array_map('get_class', Sudo::fetchProperty($shell, 'matchers'));
+                } catch (\ReflectionException $e) {
+                    // shrug
+                }
+            }
+        } catch (\ReflectionException $e) {
+            // shrug
         }
 
         // @todo Show Presenter / custom casters.
 
-        return \array_merge($core, \compact('updates', 'pcntl', 'input', 'readline', 'output', 'history', 'docs', 'autocomplete'));
+        return \array_merge($shellInfo, $core, \compact('updates', 'pcntl', 'input', 'readline', 'output', 'history', 'docs', 'autocomplete'));
     }
 }
 
@@ -288,18 +331,23 @@ if (!\function_exists('Psy\\bin')) {
     {
         return function () {
             if (!isset($_SERVER['PSYSH_IGNORE_ENV']) || !$_SERVER['PSYSH_IGNORE_ENV']) {
-                if (\defined('HHVM_VERSION_ID') && \HHVM_VERSION_ID < 31800) {
+                if (\defined('HHVM_VERSION_ID') && HHVM_VERSION_ID < 31800) {
                     \fwrite(\STDERR, 'HHVM 3.18 or higher is required. You can set the environment variable PSYSH_IGNORE_ENV=1 to override this restriction and proceed anyway.'.\PHP_EOL);
                     exit(1);
                 }
 
-                if (\defined('HHVM_VERSION_ID') && \HHVM_VERSION_ID > 39999) {
+                if (\defined('HHVM_VERSION_ID') && HHVM_VERSION_ID > 39999) {
                     \fwrite(\STDERR, 'HHVM 4 or higher is not supported. You can set the environment variable PSYSH_IGNORE_ENV=1 to override this restriction and proceed anyway.'.\PHP_EOL);
                     exit(1);
                 }
 
                 if (\PHP_VERSION_ID < 50509) {
                     \fwrite(\STDERR, 'PHP 5.5.9 or higher is required. You can set the environment variable PSYSH_IGNORE_ENV=1 to override this restriction and proceed anyway.'.\PHP_EOL);
+                    exit(1);
+                }
+
+                if (\PHP_VERSION_ID < 50600 && \Phar::running()) {
+                    \fwrite(\STDERR, 'PHP 5.6.0 or higher is required. You can set the environment variable PSYSH_IGNORE_ENV=1 to override this restriction and proceed anyway.'.\PHP_EOL);
                     exit(1);
                 }
 
@@ -367,6 +415,7 @@ Options:
   -r, --raw-output      Print var_export-style return values (for non-interactive input)
   -q, --quiet           Shhhhhh.
   -v|vv|vvv, --verbose  Increase the verbosity of messages.
+      --yolo            Run PsySH without input validation. You don't want this.
 
 EOL;
                 exit($usageException === null ? 0 : 1);

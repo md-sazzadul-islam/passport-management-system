@@ -29,7 +29,7 @@ class ServerBag extends ParameterBag
     {
         $headers = [];
         foreach ($this->parameters as $key => $value) {
-            if (0 === strpos($key, 'HTTP_')) {
+            if (str_starts_with($key, 'HTTP_')) {
                 $headers[substr($key, 5)] = $value;
             } elseif (\in_array($key, ['CONTENT_TYPE', 'CONTENT_LENGTH', 'CONTENT_MD5'], true)) {
                 $headers[$key] = $value;
@@ -38,7 +38,7 @@ class ServerBag extends ParameterBag
 
         if (isset($this->parameters['PHP_AUTH_USER'])) {
             $headers['PHP_AUTH_USER'] = $this->parameters['PHP_AUTH_USER'];
-            $headers['PHP_AUTH_PW'] = isset($this->parameters['PHP_AUTH_PW']) ? $this->parameters['PHP_AUTH_PW'] : '';
+            $headers['PHP_AUTH_PW'] = $this->parameters['PHP_AUTH_PW'] ?? '';
         } else {
             /*
              * php-cgi under Apache does not pass HTTP Basic user/pass to PHP by default

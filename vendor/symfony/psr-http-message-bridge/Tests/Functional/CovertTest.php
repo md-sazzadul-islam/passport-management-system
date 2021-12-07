@@ -34,15 +34,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CovertTest extends TestCase
 {
-    private $tmpDir;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
-        if (!class_exists('Nyholm\Psr7\ServerRequest')) {
+        if (!class_exists(Psr7Request::class)) {
             $this->markTestSkipped('nyholm/psr7 is not installed.');
         }
-
-        $this->tmpDir = sys_get_temp_dir();
     }
 
     /**
@@ -124,8 +120,8 @@ class CovertTest extends TestCase
                 'c2' => ['c3' => 'bar'],
             ],
             [
-                'f1' => $this->createUploadedFile('F1', 'f1.txt', 'text/plain', UPLOAD_ERR_OK),
-                'foo' => ['f2' => $this->createUploadedFile('F2', 'f2.txt', 'text/plain', UPLOAD_ERR_OK)],
+                'f1' => $this->createUploadedFile('F1', 'f1.txt', 'text/plain', \UPLOAD_ERR_OK),
+                'foo' => ['f2' => $this->createUploadedFile('F2', 'f2.txt', 'text/plain', \UPLOAD_ERR_OK)],
             ],
             [
                 'REQUEST_METHOD' => 'POST',
@@ -233,7 +229,7 @@ class CovertTest extends TestCase
 
     private function createUploadedFile($content, $originalName, $mimeType, $error)
     {
-        $path = tempnam($this->tmpDir, uniqid());
+        $path = tempnam(sys_get_temp_dir(), uniqid());
         file_put_contents($path, $content);
 
         return new UploadedFile($path, $originalName, $mimeType, $error, true);

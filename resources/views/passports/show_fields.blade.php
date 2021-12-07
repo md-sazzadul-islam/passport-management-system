@@ -19,7 +19,7 @@
 <!-- Position Field -->
 <div class="form-group col-md-6">
     <strong>{!! Form::label('position', 'Position:') !!}</strong>
-    <p>{{ (isset($passport->possitionjoin->title)?$passport->possitionjoin->title:'None') }}</p>
+    <p>{{ (isset($passport->positionjoin->title)?$passport->positionjoin->title:'None') }}</p>
 </div>
 
 <!-- Issue Date Field -->

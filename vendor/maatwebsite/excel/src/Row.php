@@ -102,6 +102,14 @@ class Row implements ArrayAccess
     }
 
     /**
+     * @return bool
+     */
+    public function isEmpty($calculateFormulas = false): bool
+    {
+        return count(array_filter($this->toArray(null, $calculateFormulas, false))) === 0;
+    }
+
+    /**
      * @return int
      */
     public function getIndex(): int

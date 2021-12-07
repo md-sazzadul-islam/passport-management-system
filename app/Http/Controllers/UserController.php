@@ -56,6 +56,10 @@ class UserController extends AppBaseController
      */
     public function store(CreateUserRequest $request)
     {
+        if(env('DEMO_MODE', false)) {
+            Flash::error('This is only demo site. You can not change this data.');
+            return redirect(route('users.index'));
+        }
         $input = $request->all();
         $input['password'] = bcrypt($request->password);
 
@@ -116,6 +120,10 @@ class UserController extends AppBaseController
      */
     public function update($id, UpdateUserRequest $request)
     {
+        if(env('DEMO_MODE', false)) {
+            Flash::error('This is only demo site. You can not change this data.');
+            return redirect(route('users.index'));
+        }
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {
@@ -142,6 +150,11 @@ class UserController extends AppBaseController
      */
     public function destroy($id)
     {
+        if(env('DEMO_MODE', false)) {
+            Flash::error('This is only demo site. You can not change this data.');
+            return redirect(route('users.index'));
+        }
+
         $user = $this->userRepository->find($id);
 
         if (empty($user)) {
@@ -160,6 +173,7 @@ class UserController extends AppBaseController
 
     public function change_password()
     {
+        
         $user = $this->userRepository->find(Auth::user()->id);
 
         if (empty($user)) {
@@ -181,6 +195,10 @@ class UserController extends AppBaseController
      */
     public function change_password_update(PasswordChangeRequest $request)
     {
+        if(env('DEMO_MODE', false)) {
+            Flash::error('This is only demo site. You can not change this data.');
+            return redirect(route('users.index'));
+        }
         $id = Auth::user()->id;
         $user = $this->userRepository->find($id);
 

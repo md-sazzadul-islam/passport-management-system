@@ -41,6 +41,10 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     public function __construct(array $elements = [])
     {
         $this->elements = $elements;
+
+        if (self::class !== static::class) {
+            @\trigger_error('Extending the ArrayCollection class is deprecated in league/commonmark 1.6 and will not be allowed in 2.0', \E_USER_DEPRECATED);
+        }
     }
 
     /**
@@ -67,8 +71,6 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * Retrieve an external iterator
      *
      * @return \ArrayIterator<int|string, mixed>
-     *
-     * @phpstan-return \ArrayIterator<TKey, TValue>
      */
     public function getIterator()
     {

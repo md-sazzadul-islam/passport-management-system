@@ -69,10 +69,6 @@ class XmlFileLoader extends FileLoader
     /**
      * Parses a node from a loaded XML file.
      *
-     * @param \DOMElement $node Element to parse
-     * @param string      $path Full path of the XML file being processed
-     * @param string      $file Loaded file name
-     *
      * @throws \InvalidArgumentException When the XML is invalid
      */
     protected function parseNode(RouteCollection $collection, \DOMElement $node, string $path, string $file)
@@ -87,6 +83,16 @@ class XmlFileLoader extends FileLoader
                 break;
             case 'import':
                 $this->parseImport($collection, $node, $path, $file);
+                break;
+            case 'when':
+                if (!$this->env || $node->getAttribute('env') !== $this->env) {
+                    break;
+                }
+                foreach ($node->childNodes as $node) {
+                    if ($node instanceof \DOMElement) {
+                        $this->parseNode($collection, $node, $path, $file);
+                    }
+                }
                 break;
             default:
                 throw new \InvalidArgumentException(sprintf('Unknown tag "%s" used in file "%s". Expected "route" or "import".', $node->localName, $path));
@@ -103,9 +109,6 @@ class XmlFileLoader extends FileLoader
 
     /**
      * Parses a route and adds it to the RouteCollection.
-     *
-     * @param \DOMElement $node Element to parse that represents a Route
-     * @param string      $path Full path of the XML file being processed
      *
      * @throws \InvalidArgumentException When the XML is invalid
      */
@@ -143,10 +146,6 @@ class XmlFileLoader extends FileLoader
 
     /**
      * Parses an import and adds the routes in the resource to the RouteCollection.
-     *
-     * @param \DOMElement $node Element to parse that represents a Route
-     * @param string      $path Full path of the XML file being processed
-     * @param string      $file Loaded file name
      *
      * @throws \InvalidArgumentException When the XML is invalid
      */
@@ -220,10 +219,6 @@ class XmlFileLoader extends FileLoader
     }
 
     /**
-     * Loads an XML file.
-     *
-     * @param string $file An XML file path
-     *
      * @return \DOMDocument
      *
      * @throws \InvalidArgumentException When loading of XML file fails because of syntax errors
@@ -358,7 +353,7 @@ class XmlFileLoader extends FileLoader
     /**
      * Recursively parses the value of a "default" element.
      *
-     * @return array|bool|float|int|string The parsed value
+     * @return array|bool|float|int|string|null The parsed value
      *
      * @throws \InvalidArgumentException when the XML is invalid
      */

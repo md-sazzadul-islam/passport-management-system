@@ -1,5 +1,44 @@
 # Laravel DataTables Buttons Plugin CHANGELOG.
 
+## v4.13.3 - 09-14-2021
+
+- Fix FastExcel Integration: Use data as source. #138
+
+## v4.13.2 - 09-14-2021
+
+- Fix export with array values. #136
+- Fix https://github.com/yajra/laravel-datatables-buttons/issues/135
+
+## v4.13.1 - 07-01-2021
+
+- Fix addScopes method pushing the array of scopes. #133
+
+## v4.13.0 - 04-21-2021
+
+- Allow passing of constructor arguments on make method helper. #131
+
+## v4.12.2 - 04-10-2021
+
+- Fix checking of custom export handler. #130
+- Fix #129 and #127
+
+## v4.12.1 - 04-03-2021
+
+- Use same export data if export handler extends DataTablesExportHandler [#127](https://github.com/yajra/laravel-datatables-buttons/pull/127)
+- Fix [#126](https://github.com/yajra/laravel-datatables-buttons/issue/126)
+
+## v4.12.0 - 03-19-2021
+
+- Add support for fast-excel when exporting to excel and csv. [#124](https://github.com/yajra/laravel-datatables-buttons/pull/124)
+
+## v4.11.1 - 03-18-2021
+
+- Fix class file ext.
+
+## v4.11.0 - 03-18-2021
+
+- Improve support for custom laravel-excel export class using collection. [#122](https://github.com/yajra/laravel-datatables-buttons/pull/122)
+
 ## v4.10.4 - 01-13-2021
 
 - Reverts [#120] as it breaks several installations.

@@ -3,20 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{$app_title}}</title>
+    <title>{{isset($app_title)?$app_title:"Passport"}}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 4.1.1 -->
-    <link rel="stylesheet" href="{{ URL::asset('css/custom.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-datetimepicker.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('public/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('public/css/bootstrap-datetimepicker.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ URL::asset('css/mainui.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('public/css/mainui.min.css') }}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="{{ URL::asset('css/mainui-icons-free.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('public/css/mainui-icons-free.css') }}">
 
-    <link href="{{ URL::asset('css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('css/simple-line-icons.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ URL::asset('css/flag-icon.min.css') }}">
-    <link href="{{ URL::asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('public/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('public/css/simple-line-icons.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ URL::asset('public/css/flag-icon.min.css') }}">
+    <link href="{{ URL::asset('public/css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
@@ -25,20 +25,20 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img class="navbar-brand-full" src="{{ asset('/storage/'.$app_logo) }}" width="30" height="30" alt="{{$app_name}}">
-            <img class="navbar-brand-minimized" src="{{asset('/storage/'.$app_logo)  }}" width="30" height="30" alt="{{$app_name}}">
+            <img class="navbar-brand-full" src="{{ asset('public//storage/'.$app_logo) }}" width="30" height="40" alt="{{$app_name}}">
+            <img class="navbar-brand-minimized" src="{{asset('public//storage/'.$app_logo)  }}" width="30" height="40" alt="{{$app_name}}">
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item d-md-down-none">
+            <!-- <li class="nav-item d-md-down-none">
                 <a class="nav-link" href="#">
                     <i class="icon-bell"></i>
                     <span class="badge badge-pill badge-danger">5</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
                 <a class="nav-link" style="margin-right: 10px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     {{ (isset(Auth::user()->name)?Auth::user()->name:'') }}
@@ -78,22 +78,22 @@
     </div>
     <footer class="app-footer">
         <div>
-            <a href="http://sazzadul.com">Sazzad </a>
-            <span>&copy; 2020 Sazzad.</span>
+            <a href="http://viewhtml.com">{{$app_name}} </a>
+            <span>&copy; {{date('Y')}} {{$app_name}}</span>
         </div>
-        <div class="ml-auto">
+        <!-- <div class="ml-auto">
             <span>Powered by</span>
             <a href="https://sazzadul.com">Sazzad</a>
-        </div>
+        </div> -->
     </footer>
 </body>
 <!-- jQuery 3.1.1 -->
-<script src="{{ URL::asset('js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ URL::asset('js/popper.min.js') }}"></script>
-<script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ URL::asset('js/moment.min.js') }}"></script>
-<script src="{{ URL::asset('js/bootstrap-datetimepicker.min.js') }}"></script>
-<script src="{{ URL::asset('js/mainui.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/popper.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/moment.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/mainui.min.js') }}"></script>
 
 
 @stack('scripts')

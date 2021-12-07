@@ -110,9 +110,9 @@ class Passport extends Model
     {
         return $this->belongsTo(SelectionStatus::class, 'selection_status');
     }
-    public function possitionjoin()
+    public function positionjoin()
     {
-        return $this->belongsTo(Possition::class, 'position');
+        return $this->belongsTo(Position::class, 'position');
     }
 
     

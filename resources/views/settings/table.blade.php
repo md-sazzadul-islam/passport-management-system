@@ -3,23 +3,25 @@
         <thead>
             <tr>
                 <th>App Name</th>
-        <th>App Title</th>
-        <th>Address</th>
-        <th>Phone</th>
-        <th>App Email</th>
-        <th>App Logo</th>
+                <th>App Title</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>App Email</th>
+                <th>App Logo</th>
                 <th colspan="3">Action</th>
             </tr>
         </thead>
         <tbody>
-        @foreach($settings as $setting)
+            @foreach($settings as $setting)
             <tr>
                 <td>{{ $setting->app_name }}</td>
-            <td>{{ $setting->app_title }}</td>
-            <td>{{ $setting->address }}</td>
-            <td>{{ $setting->phone }}</td>
-            <td>{{ $setting->app_email }}</td>
-            <td>{{ $setting->app_logo }}</td>
+                <td>{{ $setting->app_title }}</td>
+                <td>{{ $setting->address }}</td>
+                <td>{{ $setting->phone }}</td>
+                <td>{{ $setting->app_email }}</td>
+                <td>
+                    <img src="{{ asset('public//storage/'. $setting->app_logo ) }}" width="30" height="40">
+                </td>
                 <td>
                     {!! Form::open(['route' => ['settings.destroy', $setting->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>
@@ -30,7 +32,7 @@
                     {!! Form::close() !!}
                 </td>
             </tr>
-        @endforeach
+            @endforeach
         </tbody>
     </table>
 </div>

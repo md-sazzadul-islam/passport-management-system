@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ $passport->passport_holder }}</td>
                 <td>{{ $passport->passport_no }}</td>
-                <td>{{ (isset($passport->possitionjoin->title)?$passport->possitionjoin->title:'None') }}</td>
+                <td>{{ (isset($passport->positionjoin->title)?$passport->positionjoin->title:'None') }}</td>
                 <td>{{ $passport->mobile_no }}</td>
                 <td>{{ (isset($passport->selectionStatusjoin->title)?$passport->selectionStatusjoin->title:'None') }}</td>
                 <td>{{ (isset($passport->medicalStatusjoin->title)?$passport->medicalStatusjoin->title:'None') }}</td>

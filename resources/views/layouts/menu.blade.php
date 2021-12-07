@@ -5,10 +5,10 @@
     </a>
 </li>
 
-<li class="nav-item {{ Request::is('possitions*') ? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('possitions.index') }}">
+<li class="nav-item {{ Request::is('positions*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('positions.index') }}">
         <i class="nav-icon icon-directions"></i>
-        <span>Possitions</span>
+        <span>Positions</span>
     </a>
 </li>
 

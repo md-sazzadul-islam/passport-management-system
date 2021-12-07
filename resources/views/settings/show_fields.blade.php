@@ -31,7 +31,7 @@
 <!-- App Logo Field -->
 <div class="form-group">
     {!! Form::label('app_logo', 'App Logo:') !!}
-    <p>{{ $setting->app_logo }}</p>
+    <img src="{{ asset('public//storage/'. $setting->app_logo ) }}" width="30" height="40">
 </div>
 
 <!-- Created At Field -->

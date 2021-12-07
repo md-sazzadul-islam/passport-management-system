@@ -23,4 +23,8 @@ class Dashboard extends Model
     {
         return Passport::whereMonth('issue_date', $month)->count();
     }
+    public function passport_total()
+    {
+        return Passport::count();
+    }
 }

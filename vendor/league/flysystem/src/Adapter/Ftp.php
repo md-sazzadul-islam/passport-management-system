@@ -160,7 +160,7 @@ class Ftp extends AbstractFtpAdapter
     {
         if ($this->utf8) {
             $response = ftp_raw($this->connection, "OPTS UTF8 ON");
-            if (substr($response[0], 0, 3) !== '200') {
+            if (!in_array(substr($response[0], 0, 3), ['200', '202'])) {
                 throw new ConnectionRuntimeException(
                     'Could not set UTF-8 mode for connection: ' . $this->getHost() . '::' . $this->getPort()
                 );
@@ -563,11 +563,10 @@ class Ftp extends AbstractFtpAdapter
         $connection = $this->getConnection();
 
         if ($this->isPureFtpd) {
-            $path = str_replace(' ', '\ ', $path);
-            $this->escapePath($path);
+            $path = str_replace([' ', '[', ']'], ['\ ', '\\[', '\\]'], $path);
         }
 
-        return ftp_rawlist($connection, $options . ' ' . $path);
+        return ftp_rawlist($connection, $options . ' ' . $this->escapePath($path));
     }
 
     private function getRawExecResponseCode($command)

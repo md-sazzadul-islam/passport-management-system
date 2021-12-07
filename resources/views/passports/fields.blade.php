@@ -19,7 +19,7 @@
 <!-- Position Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('position', 'Position:') !!}
-    {!! Form::select('position', $possition, null, ['class' => 'form-control', 'placeholder' => 'Please Position']) !!}
+    {!! Form::select('position', $position, null, ['class' => 'form-control', 'placeholder' => 'Please Position']) !!}
 </div>
 
 <!-- Issue Date Field -->

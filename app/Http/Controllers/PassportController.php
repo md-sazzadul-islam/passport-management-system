@@ -14,7 +14,7 @@ use App\Models\MedicalStatus;
 use App\Models\Agent;
 use App\Models\Reference;
 use App\Models\SelectionStatus;
-use App\Models\Possition;
+use App\Models\Position;
 
 class PassportController extends AppBaseController
 {
@@ -33,7 +33,7 @@ class PassportController extends AppBaseController
      *
      * @return Response
      */
-    
+
     public function index(Request $request)
     {
         $search = array();
@@ -44,7 +44,7 @@ class PassportController extends AppBaseController
         $passports = $this->passportRepository->paginate(
             10,
             $search,
-            ['medicalReportjoin', 'medicalStatusjoin', 'referencejoin', 'agentjoin', 'selectionStatusjoin', 'possitionjoin']
+            ['medicalReportjoin', 'medicalStatusjoin', 'referencejoin', 'agentjoin', 'selectionStatusjoin', 'positionjoin']
         );
         // dd($passports);
 
@@ -65,7 +65,7 @@ class PassportController extends AppBaseController
         $data['reference'] = Reference::pluck('name', 'id');
         $data['agent'] = Agent::pluck('title', 'id');
         $data['selectionStatus'] = SelectionStatus::pluck('title', 'id');
-        $data['possition'] = Possition::pluck('title', 'id');
+        $data['position'] = Position::pluck('title', 'id');
         return view('passports.create', $data);
     }
 
@@ -116,15 +116,22 @@ class PassportController extends AppBaseController
      */
     public function edit($id)
     {
+        $data['medicalReport'] = MedicalReport::pluck('title', 'id');
+        $data['medicalStatus'] = MedicalStatus::pluck('title', 'id');
+        $data['reference'] = Reference::pluck('name', 'id');
+        $data['agent'] = Agent::pluck('title', 'id');
+        $data['selectionStatus'] = SelectionStatus::pluck('title', 'id');
+        $data['position'] = Position::pluck('title', 'id');
         $passport = $this->passportRepository->find($id);
-
+        $data['passport'] = $passport;
+        // dd($passport);
         if (empty($passport)) {
             Flash::error('Passport not found');
 
             return redirect(route('passports.index'));
         }
 
-        return view('passports.edit')->with('passport', $passport);
+        return view('passports.edit', $data);
     }
 
     /**

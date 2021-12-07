@@ -22,9 +22,9 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3>{{$dashboard->passport_total()}}</h3>
 
-                    <p>New Orders</p>
+                    <p>Total Passport</p>
                 </div>
                 <div class="icon">
                     <i class="nav-icon icon-user"></i>
@@ -39,7 +39,7 @@
 @endsection
 
 @push('scripts')
-<script src="{{ URL::asset('js/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/Chart.min.js') }}"></script>
 <script>
     //-------------
     //- BAR CHART -

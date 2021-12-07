@@ -55,6 +55,10 @@ class SettingController extends AppBaseController
      */
     public function store(CreatesettingRequest $request)
     {
+        if(env('DEMO_MODE', false)) {
+            Flash::error('This is only demo site. You can not change this data.');
+            return redirect(route('settings.index'));
+        }
         // dd($request->hasFile('app_logo'));
         $input = $request->all();
 
@@ -124,6 +128,10 @@ class SettingController extends AppBaseController
      */
     public function update($id, UpdatesettingRequest $request)
     {
+        if(env('DEMO_MODE', false)) {
+            Flash::error('This is only demo site. You can not change this data.');
+            return redirect(route('settings.index'));
+        }
         $setting = $this->settingRepository->find($id);
         $input = $request->all();
         if (empty($setting)) {
@@ -161,6 +169,10 @@ class SettingController extends AppBaseController
      */
     public function destroy($id)
     {
+        if(env('DEMO_MODE', false)) {
+            Flash::error('This is only demo site. You can not change this data.');
+            return redirect(route('settings.index'));
+        }
         $setting = $this->settingRepository->find($id);
 
         if (empty($setting)) {
