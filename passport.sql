@@ -28,11 +28,6 @@ CREATE TABLE `agents` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `agents` */
-
-insert  into `agents`(`id`,`title`,`created_at`,`updated_at`) values 
-(1,'SSG','2020-09-13 13:24:18','2020-09-13 13:24:18');
-
 /*Table structure for table `failed_jobs` */
 
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -47,7 +42,6 @@ CREATE TABLE `failed_jobs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `failed_jobs` */
 
 /*Table structure for table `medical_reports` */
 
@@ -61,10 +55,6 @@ CREATE TABLE `medical_reports` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `medical_reports` */
-
-insert  into `medical_reports`(`id`,`title`,`created_at`,`updated_at`) values 
-(1,'Fit','2020-09-12 08:29:54','2020-09-12 08:29:54');
 
 /*Table structure for table `medical_statuses` */
 
@@ -77,11 +67,6 @@ CREATE TABLE `medical_statuses` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `medical_statuses` */
-
-insert  into `medical_statuses`(`id`,`title`,`created_at`,`updated_at`) values 
-(1,'Medical Status','2020-09-13 13:24:08','2020-09-13 13:24:08');
 
 /*Table structure for table `migrations` */
 
@@ -105,20 +90,7 @@ insert  into `migrations`(`id`,`migration`,`batch`) values
 (6,'2016_06_01_000004_create_oauth_clients_table',1),
 (7,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),
 (8,'2019_08_19_000000_create_failed_jobs_table',1),
-(9,'2020_08_19_064132_create_permission_tables',1),
-(10,'2020_09_11_171615_create_settings_table',1),
-(11,'2020_09_11_210625_create_positions_table',2),
-(12,'2020_09_11_210754_create_selection_statuses_table',3),
-(13,'2020_09_11_211125_create_references_table',4),
-(14,'2020_09_11_212045_create_medical_statuses_table',5),
-(15,'2020_09_12_064959_create_agents_table',6),
-(16,'2020_09_12_065626_create_medical_reports_table',6),
-(17,'2020_09_12_065751_create_passports_table',7),
-(18,'2020_09_12_140107_create_testttts_table',8),
-(19,'2020_09_12_173808_create_mycontes_table',9),
-(20,'2020_09_13_045600_create_mycontes_table',10),
-(21,'2020_09_13_133856_create_ronis_table',11),
-(22,'2020_09_18_200712_create_payments_table',12);
+(9,'2020_08_19_064132_create_permission_tables',1);
 
 /*Table structure for table `model_has_permissions` */
 
@@ -133,7 +105,6 @@ CREATE TABLE `model_has_permissions` (
   CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `model_has_permissions` */
 
 /*Table structure for table `model_has_roles` */
 
@@ -148,7 +119,6 @@ CREATE TABLE `model_has_roles` (
   CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `model_has_roles` */
 
 /*Table structure for table `mycontes` */
 
@@ -162,10 +132,6 @@ CREATE TABLE `mycontes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `mycontes` */
-
-insert  into `mycontes`(`id`,`test`,`created_at`,`updated_at`) values 
-(1,'sdfsdf','2020-09-13 19:34:56','2020-09-13 19:34:56');
 
 /*Table structure for table `oauth_access_tokens` */
 
@@ -185,8 +151,6 @@ CREATE TABLE `oauth_access_tokens` (
   KEY `oauth_access_tokens_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `oauth_access_tokens` */
-
 /*Table structure for table `oauth_auth_codes` */
 
 DROP TABLE IF EXISTS `oauth_auth_codes`;
@@ -201,8 +165,6 @@ CREATE TABLE `oauth_auth_codes` (
   PRIMARY KEY (`id`),
   KEY `oauth_auth_codes_user_id_index` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `oauth_auth_codes` */
 
 /*Table structure for table `oauth_clients` */
 
@@ -224,14 +186,6 @@ CREATE TABLE `oauth_clients` (
   KEY `oauth_clients_user_id_index` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `oauth_clients` */
-
-insert  into `oauth_clients`(`id`,`user_id`,`name`,`secret`,`provider`,`redirect`,`personal_access_client`,`password_client`,`revoked`,`created_at`,`updated_at`) values 
-(1,NULL,'Laravel Personal Access Client','aEE0PIZVvCPdifzAoo6dhhq1xaepOizJU4luA9dG',NULL,'http://localhost',1,0,0,'2020-09-13 18:38:09','2020-09-13 18:38:09'),
-(2,NULL,'Laravel Password Grant Client','4YPF4vztlogeGeSxcNOx0okX9280G8FfZDvUZoYW','users','http://localhost',0,1,0,'2020-09-13 18:38:10','2020-09-13 18:38:10'),
-(3,NULL,'Laravel Personal Access Client','LyHS7Yp3GnXRZNLz2SNilCZlgPF66qV9I1q81TCl',NULL,'http://localhost',1,0,0,'2020-09-13 19:49:19','2020-09-13 19:49:19'),
-(4,NULL,'Laravel Password Grant Client','nOpBZ1PyD1HDo6dIeuDpZ8SJhOWSHQzOYiSflC79','users','http://localhost',0,1,0,'2020-09-13 19:49:19','2020-09-13 19:49:19');
-
 /*Table structure for table `oauth_personal_access_clients` */
 
 DROP TABLE IF EXISTS `oauth_personal_access_clients`;
@@ -243,12 +197,6 @@ CREATE TABLE `oauth_personal_access_clients` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `oauth_personal_access_clients` */
-
-insert  into `oauth_personal_access_clients`(`id`,`client_id`,`created_at`,`updated_at`) values 
-(1,1,'2020-09-13 18:38:10','2020-09-13 18:38:10'),
-(2,3,'2020-09-13 19:49:19','2020-09-13 19:49:19');
 
 /*Table structure for table `oauth_refresh_tokens` */
 
@@ -262,8 +210,6 @@ CREATE TABLE `oauth_refresh_tokens` (
   PRIMARY KEY (`id`),
   KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `oauth_refresh_tokens` */
 
 /*Table structure for table `passports` */
 
@@ -304,11 +250,6 @@ CREATE TABLE `passports` (
   CONSTRAINT `passports_selection_status_foreign` FOREIGN KEY (`selection_status`) REFERENCES `selection_statuses` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `passports` */
-
-insert  into `passports`(`id`,`passport_holder`,`holder_father_name`,`passport_no`,`position`,`issue_date`,`expiry_date`,`date_of_birth`,`mobile_no`,`selection_status`,`medical_issue_date`,`medical_status`,`medical_report`,`reference`,`company_name`,`agent`,`remarks`,`created_at`,`updated_at`) values 
-(20,'Md sazzadul islam','Md Abdur rahim','1234567',2,'2021-01-12','2020-09-17','2020-09-17','12345',1,'2020-09-17',1,1,1,'SSG',1,'teos fsd fsd','2020-09-16 19:04:40','2020-09-16 19:04:40'),
-(21,'Md sazzadul','Md','123456722',NULL,'2021-02-24','2020-09-17','2020-09-17','12345',NULL,'2020-09-17',1,NULL,NULL,'SSG',1,'re','2020-09-16 19:28:13','2020-09-16 19:28:13');
 
 /*Table structure for table `password_resets` */
 
@@ -321,10 +262,6 @@ CREATE TABLE `password_resets` (
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `password_resets` */
-
-insert  into `password_resets`(`email`,`token`,`created_at`) values 
-('sazzadulisalm6@gmail.com','$2y$10$WyKoy3eZAjFQgDdsOzi2RuNMFadZ6kcLSu6tUdXSk0f4BCJOwjAhe','2021-04-26 08:56:57');
 
 /*Table structure for table `payments` */
 
@@ -343,14 +280,6 @@ CREATE TABLE `payments` (
   CONSTRAINT `payments_passport_foreign` FOREIGN KEY (`passport`) REFERENCES `passports` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `payments` */
-
-insert  into `payments`(`id`,`amount`,`passport`,`date`,`note`,`created_at`,`updated_at`) values 
-(1,100,20,'2021-04-26','test','2020-09-18 20:17:24','2020-09-18 20:17:24'),
-(2,200,21,NULL,'1234','2020-09-18 20:28:26','2020-09-18 20:28:26'),
-(3,123,20,NULL,'test','2020-11-26 18:12:13','2020-11-26 18:12:13'),
-(4,100000,20,'2021-04-26','test','2021-04-26 17:34:10','2021-04-26 17:34:10'),
-(5,454545,20,'2021-04-23','test','2021-04-26 17:35:25','2021-04-26 17:35:25');
 
 /*Table structure for table `permissions` */
 
@@ -365,7 +294,6 @@ CREATE TABLE `permissions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `permissions` */
 
 /*Table structure for table `positions` */
 
@@ -379,11 +307,6 @@ CREATE TABLE `positions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `positions` */
-
-insert  into `positions`(`id`,`title`,`created_at`,`updated_at`) values 
-(1,'Footwear','2020-09-11 21:16:13','2020-09-11 21:16:13'),
-(2,'test','2020-09-13 13:23:29','2020-09-13 13:23:29');
 
 /*Table structure for table `references` */
 
@@ -399,10 +322,6 @@ CREATE TABLE `references` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `references` */
-
-insert  into `references`(`id`,`name`,`phone`,`address`,`created_at`,`updated_at`) values 
-(1,'Reference','01829282161','House-14(4th floor), Road-4, Block:B, Mirpur-6, Dhaka-1216 ,Bangladesh.','2020-09-13 13:24:00','2020-09-13 13:24:00');
 
 /*Table structure for table `role_has_permissions` */
 
@@ -417,7 +336,6 @@ CREATE TABLE `role_has_permissions` (
   CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `role_has_permissions` */
 
 /*Table structure for table `roles` */
 
@@ -432,26 +350,6 @@ CREATE TABLE `roles` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `roles` */
-
-/*Table structure for table `ronis` */
-
-DROP TABLE IF EXISTS `ronis`;
-
-CREATE TABLE `ronis` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `ronis` */
-
-insert  into `ronis`(`id`,`name`,`email`,`created_at`,`updated_at`) values 
-(2,'Sazzadul islam','admin@gmail.com','2020-09-13 13:40:56','2020-09-13 13:40:56'),
-(3,'Md Sazzadul islam','sazzadulisalm6@gmail.com','2020-09-13 13:41:07','2020-09-13 13:41:07');
 
 /*Table structure for table `selection_statuses` */
 
@@ -464,11 +362,6 @@ CREATE TABLE `selection_statuses` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `selection_statuses` */
-
-insert  into `selection_statuses`(`id`,`title`,`created_at`,`updated_at`) values 
-(1,'Selection','2020-09-13 13:23:44','2020-09-13 13:23:44');
 
 /*Table structure for table `settings` */
 
@@ -487,28 +380,9 @@ CREATE TABLE `settings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/*Data for the table `settings` */
 
 insert  into `settings`(`id`,`app_name`,`app_title`,`address`,`phone`,`app_email`,`app_logo`,`created_at`,`updated_at`) values 
-(1,'Passport management system','Passport management','Dhaka-1216 ,Bangladesh.','01829282161','sazzadulislam6@gmail.com','logo/NKOkjys4k5QAjpw2YgHFZD4Ys601CmQsHiMnvL3x.png','2020-09-11 20:43:00','2020-09-16 19:40:41');
-
-/*Table structure for table `testttts` */
-
-DROP TABLE IF EXISTS `testttts`;
-
-CREATE TABLE `testttts` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `test` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `testttts` */
-
-insert  into `testttts`(`id`,`test`,`created_at`,`updated_at`) values 
-(1,'sdfsdf',NULL,NULL),
-(2,'sdfg','2020-09-12 15:11:54','2020-09-12 15:11:54');
+(1,'Passport management system','Passport management','Dhaka-1216 ,Bangladesh.','0123456789','sazzadulislam6@gmail.com','logo/NKOkjys4k5QAjpw2YgHFZD4Ys601CmQsHiMnvL3x.png','2020-09-11 20:43:00','2020-09-16 19:40:41');
 
 /*Table structure for table `users` */
 
@@ -530,10 +404,9 @@ CREATE TABLE `users` (
 /*Data for the table `users` */
 
 insert  into `users`(`id`,`name`,`email`,`email_verified_at`,`password`,`remember_token`,`created_at`,`updated_at`) values 
-(1,'Md Sazzadul islam','sazzadulisalm6@gmail.com',NULL,'$2y$10$0eIJqcrVGNq/nHN5H5l3TeQSdpOZ9Ia98i5O4ttjVtfPJIUfM/Ex.',NULL,'2020-09-11 20:42:30','2021-04-24 17:27:52'),
-(2,'test','admin@ssgbd.com',NULL,'$2y$10$goOufabMpo3E40AxE2ExmO2kASsWExlZpu.qIkUkAVtrxUTPIklX.',NULL,'2021-04-23 08:25:54','2021-04-23 08:25:54');
+(1,'Admin','admin@sazzadul.com',NULL,'$2y$10$0eIJqcrVGNq/nHN5H5l3TeQSdpOZ9Ia98i5O4ttjVtfPJIUfM/Ex.',NULL,'2020-09-11 20:42:30','2021-04-24 17:27:52');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;~
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;~
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
