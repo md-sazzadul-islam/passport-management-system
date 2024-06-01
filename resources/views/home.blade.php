@@ -39,7 +39,7 @@
 @endsection
 
 @push('scripts')
-<script src="{{ URL::asset('public/js/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('js/Chart.min.js') }}"></script>
 <script>
     //-------------
     //- BAR CHART -

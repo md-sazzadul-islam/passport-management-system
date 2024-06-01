@@ -20,7 +20,7 @@
                 <td>{{ $setting->phone }}</td>
                 <td>{{ $setting->app_email }}</td>
                 <td>
-                    <img src="{{ asset('public//storage/'. $setting->app_logo ) }}" width="30" height="40">
+                    <img src="{{ asset('/storage/'. $setting->app_logo ) }}" width="30" height="40">
                 </td>
                 <td>
                     {!! Form::open(['route' => ['settings.destroy', $setting->id], 'method' => 'delete']) !!}
