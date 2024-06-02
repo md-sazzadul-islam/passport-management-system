@@ -1,0 +1,17 @@
+# These are supported funding model platforms
+
+github: [md-sazzadul-islam] # Replace with your GitHub username if you have GitHub Sponsors set up
+patreon: # Replace with your Patreon username if applicable
+open_collective: # Replace with your Open Collective username if applicable
+ko_fi: # Replace with your Ko-fi username if applicable
+tidelift: # Replace with your Tidelift username if applicable
+community_bridge: # Replace with your Community Bridge username if applicable
+liberapay: # Replace with your Liberapay username if applicable
+issuehunt: # Replace with your Issuehunt username if applicable
+otechie: # Replace with your Otechie username if applicable
+lfx_crowdfunding: # Replace with your LFX Crowdfunding username if applicable
+
+# Custom funding URLs
+custom:
+  - platform: Buy Me a Coffee
+    url: https://www.buymeacoffee.com/sazzadul
