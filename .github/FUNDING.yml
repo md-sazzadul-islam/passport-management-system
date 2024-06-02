@@ -10,8 +10,5 @@ liberapay: # Replace with your Liberapay username if applicable
 issuehunt: # Replace with your Issuehunt username if applicable
 otechie: # Replace with your Otechie username if applicable
 lfx_crowdfunding: # Replace with your LFX Crowdfunding username if applicable
+buy_me_a_coffee: sazzadul
 
-# Custom funding URLs
-custom:
-  - platform: Buy Me a Coffee
-    url: https://www.buymeacoffee.com/sazzadul
